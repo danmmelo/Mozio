@@ -1,0 +1,224 @@
+
+Question 1: Write a function that repeats the String with the following output: 
+
+
+function Mozio (word, n){ 
+    let Mozio = [];
+    let res = "";
+    for (i=0; i<n; i++){
+      Mozio.push(word);
+        res = Mozio.join("");
+    }
+    return res;
+}
+
+Mozio("mozio", 3);
+
+
+Question 2: Return the file extension or "false" if no extension. Please explain how would you implement a unit test for this method. What would you test?
+
+PS: On github
+
+I would create a mocha test
+
+1) npm-init
+2) create a app.js that will receive the script below
+
+module.exports = {
+   getFileExtension: function (file){
+    
+        File=[];
+        File = file.split(".");
+        Ext = ['jpg', 'gif']
+  
+        for(i=0; i<Ext.length; i++){
+           if(File.indexOf(Ext[i]) === -1){
+                return false;
+              }else{
+                return 1;
+              }
+          }
+  }
+}
+3) create a file appTest.js that will use fo unit teste
+
+const assert = require('chai').assert;
+const app = require('../app');
+
+validateExtension = app.getFileExtension(“mozio.jpg”);
+
+describe('App', function(){
+
+describe('getFileExtension()', function(){
+    it('The result has a valid extention', function(){
+      assert.typeOf(validateExtension, 'number');
+    })
+})
+
+4) the output would be, if there is a valid extension
+
+  app
+    getFileExtension()
+      ✓ The result has a valid extention
+
+
+  1 passing (25ms)
+
+Question 3: Write a simple validation script for a simple form
+
+* - If the required fields are not filled out, do not submit the form…
+PS: on Github
+
+
+Question 4:  What is variable hoisting? How the new ES6 keywords const and let solve some cases?
+
+Hoisting is Javascript default behavior of moving all declarations to the top of the scope.
+let and const are block-scoped variables and allows you to declare variables that are limited in scope of the block, statement, or expression on which it is used. Const never change. Only use let when the variable may change, otherwise use const.
+
+Question 5: What is a “closure” in JavaScript? and Why is it no longer necessary to wrap your code in a closure with modern JS? Provide examples.
+
+
+What is a “closure” in JavaScript? and Why is it no longer necessary to wrap your code in a closure with modern JS? Provide examples.
+
+Closure a function that incorporates the variable and environment in which it was created.
+
+Ex: function makeAdder(x) {
+  return function(y) {
+    return x + y;
+  };
+}
+
+var add5 = makeAdder(5);
+var add10 = makeAdder(10);
+
+print(add5(2));  // 7
+print(add10(2)); // 12
+
+
+Is not necssary use closures because you use anonymous functions to create a enviroment that would be use for each independent variable.
+
+var makeCounter = function() {
+  var privateCounter = 0;
+  function changeBy(val) {
+    privateCounter += val;
+  }
+  return {
+    increment: function() {
+      changeBy(1);
+    },
+    decrement: function() {
+      changeBy(-1);
+    },
+    value: function() {
+      return privateCounter;
+    }
+  }  
+};
+
+var counter1 = makeCounter();
+var counter2 = makeCounter();
+alert(counter1.value()); /* Alerts 0 */
+counter1.increment();
+counter1.increment();
+alert(counter1.value()); /* Alerts 2 */
+counter1.decrement();
+alert(counter1.value()); /* Alerts 1 */
+alert(counter2.value()); /* Alerts 0 */
+
+Refs: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
+
+Question 6: How does prototypal inheritance differ from classical inheritance.
+
+Classical inheritance means defining classes/constructor as templates that have to be instantiated in order to use.Ex Java, c++.
+
+When it comes to inheritance, JavaScript only has one construct: objects. Each object has a private property which holds a link to another object called its prototype. That prototype object has a prototype of its own. 
+
+Ref https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
+
+Question 7: Write a code to remove duplicates from an array and return an array of only unique elements.
+
+ var array = [2,3,4,4,5,5,6];
+ 
+  
+function newArray(array){
+   let newArray = [];
+    for(i=0; i<array.length; i++){
+      
+      if(newArray.indexOf(array[i]) === -1){
+        newArray.push(array[i]);
+      }
+    }
+  return newArray;
+}
+newArray(array)
+
+
+Question 8: What means that Functions are a first class citizen in Javascript? 
+
+Functions can be stored as a variable inside an object or an array as well as it can be passed as an argument or be returned by another function. That makes function "first-class citizens in JavaScript"
+
+Ref: https://stackoverflow.com/questions/705173/what-is-meant-by-first-class-object
+
+
+Question 9: What means that something is Immutable? And what are the advantages of using immutability in data flow?
+
+Basically it comes down to the fact that immutability increases transparency, performance (indirectly) and allows for mutation tracking.
+
+Predictability
+
+Mutation hides change, which create (unexpected) side effects, which can cause nasty bugs. When you enforce immutability you can keep your application architecture and mental model simple, which makes it easier to reason about your application.
+
+Performance
+
+Even though adding values to an immutable Object means that a new instance needs to be created where existing values need to be copied and new values need to be added to the new Object which cost memory. Immutable Objects can make use of structural sharing to reduce memory overhead.
+
+Mutation Tracking
+
+Besides reduced memory usage, immutability allows you to optimize your application by making use of reference- and value equality. This makes it really easy to see if anything has changed. For example a state change in a react component. You can use shouldComponentUpdate to check if the state is identical by comparing state Objects and prevent unnecessary rendering. 
+
+Ref: https://stackoverflow.com/questions/34385243/why-is-immutability-so-important-or-needed-in-javascript
+
+Question 10: What is a pure function and what are the advantages of using it?
+
+Pure function is the function that the output depends only on input.One of the advantages is that the pure function has no side effects.They are easy to test and debug and tehy are easy to combine with another pure function.
+
+ref: https://alvinalexander.com/scala/fp-book/benefits-of-pure-functions
+
+In order to make components more reusable which components should carry specific business logic and which ones shouldn’t?
+
+Your business logic governs the user’s UI and helping them to understand actions that are appropriate at any given time.In this case in modules resposable for validation, verification, authorization for exemple.
+
+ref: https://medium.com/@jeffbski/where-do-i-put-my-business-logic-in-a-react-redux-application-9253ef91ce1
+
+Question 12: What advantage have the one data flow used by React/Redux (and other flux implementations) compared with the two way binding flow?
+
+Ps: I will start to learn redux yet.
+
+Question 13: What is a High Order Component?
+
+A higher-order component is a function that takes a component and returns a new component.
+
+Question 14: What are the pros and cons of functional programming vs object-oriented programming?
+
+OOP Pros:
+
+— Objects and methods are very readable and understandable.
+
+— OOP utilizes an imperative style, in which code reads like a straight-forward set of instructions as a computer would read it.
+
+OOP Cons:
+
+— OOP commonly depends upon shareable state. The unfortunate result of so many objects and methods existing within the same state and being accessed in an entirely undetermined order can lead the pre-discussed concept of “race conditions”.
+
+
+FP Pros:
+
+— Utilizing pure functions, leads to reliable functions with no side effects that accomplish and return exactly what you expect them to.
+
+— FP utilizes a more declarative style, which focuses more on what to do and less about how it’s being done. 
+
+FP Cons:
+
+— Functional programming is a newer paradigm. It’s much easier to find documentation and information on the OOP approach.
+
+Ref: https://medium.com/@darrickmckirnan/object-oriented-programming-oop-functional-programming-what-are-they-the-pros-and-cons-11f98a971e38
